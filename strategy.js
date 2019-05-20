@@ -1,4 +1,3 @@
-
 require('dotenv').config();
 const Auth0Strategy = require( 'passport-auth0' );
 const { DOMAIN, CLIENT_ID, CLIENT_SECRET } = process.env;

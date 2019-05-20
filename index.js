@@ -3,7 +3,6 @@ const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 const strategy = require(`${__dirname}/strategy.js`);
-const students = require('./students.json');
 
 const app = express();
 
@@ -26,17 +25,21 @@ app.use( session({
 
   app.get( '/login',
   passport.authenticate('auth0',
-    { successRedirect: '/students', failureRedirect: '/login', connection: 'github' }
+    { successRedirect: '/me', failureRedirect: '/login', failureFlash: true }
   )
 );
 
-function authenticated(req, res, next){
+app.get('/me', ( req, res, next) => {
+    if ( !req.user ) {
+      res.redirect('/login');
+    } else {
+      // req.user === req.session.passport.user
+      // console.log( req.user )
+      // console.log( req.session.passport.user );
+      res.status(200).send( JSON.stringify( req.user, null, 10 ) );
+    }
+  });
 
-}
-
-app.get('/students', ( req, res, next) => {
-      res.status(200).send( students );
-});
 
 const port = 3000;
 app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
