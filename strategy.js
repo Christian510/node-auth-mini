@@ -5,7 +5,7 @@ const { DOMAIN, CLIENT_ID, CLIENT_SECRET } = process.env;
 
 
 module.exports = new Auth0Strategy({
-    domain:         DOMAIN,
+    domain:       DOMAIN,
     clientID:     CLIENT_ID,
     clientSecret: CLIENT_SECRET,
     callbackURL:  '/login',
